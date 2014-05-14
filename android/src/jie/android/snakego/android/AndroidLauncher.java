@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+
+import jie.android.snakego.SnakeGo;
 import jie.android.snakego.SnakeGoGame;
 
 public class AndroidLauncher extends AndroidApplication {
@@ -11,6 +13,7 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new SnakeGoGame(), config);
+//		initialize(new SnakeGoGame(), config);
+		initialize(new SnakeGo(), config);
 	}
 }

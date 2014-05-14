@@ -1,4 +1,0 @@
-SnakeGo
-=======
-
-An Android Game

@@ -2,12 +2,13 @@ package jie.android.snakego.screen.test;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+
 public class Snake {
 	public class Header extends Box {
 
 		@Override
 		public void update(float delta) {
-			// TODO Auto-generated method stub
 			
 		}
 
@@ -51,7 +52,7 @@ public class Snake {
 		}		
 	}
 	
-	public static final float INTERVAL_UPDATE = 100.0f;
+	public static final float INTERVAL_UPDATE = (1.0f / 60.0f) * 30.0f;
 	public static final int INTERVAL_STEP = 24;
 	
 	private Header header = new Header();
@@ -61,14 +62,18 @@ public class Snake {
 	private float lastDelta = 0.0f;
 	
 	public void update(float delta) {
-		if (delta - lastDelta > INTERVAL_UPDATE) {
+		lastDelta += delta;
+		if (lastDelta > INTERVAL_UPDATE) {
 			header.update(delta);
 			body.update(delta);
 			
 			if (++ stepCounter >= INTERVAL_STEP) {
-				stepCounter = 0;
+				stepCounter = 0;				
+				check();
 				//listener
 			}
+			Gdx.app.log("===", "delta = " + lastDelta + " - setpCounter = " + stepCounter);
+			lastDelta = 0.0f;
 		}
 	}
 	
@@ -77,4 +82,7 @@ public class Snake {
 		body.draw();
 	}
 	
+	private void check() {
+		
+	}
 }
