@@ -51,21 +51,30 @@ public class Snake {
 		}		
 	}
 	
+	public static final float INTERVAL_UPDATE = 100.0f;
+	public static final int INTERVAL_STEP = 24;
 	
 	private Header header = new Header();
 	private Body body = new Body();
 	
-	private final int stepLength = 24;
+	private int stepCounter = 0;
+	private float lastDelta = 0.0f;
 	
 	public void update(float delta) {
-		
-		
-		header.update(delta);
-		body.update(delta);
+		if (delta - lastDelta > INTERVAL_UPDATE) {
+			header.update(delta);
+			body.update(delta);
+			
+			if (++ stepCounter >= INTERVAL_STEP) {
+				stepCounter = 0;
+				//listener
+			}
+		}
 	}
 	
 	public void draw() {
-		
+		header.draw();
+		body.draw();
 	}
 	
 }
