@@ -5,6 +5,12 @@ import com.badlogic.gdx.InputProcessor;
 
 public class TestInputProcessor implements InputProcessor {
 
+	private TestScreen screen = null;
+	
+	public void setScreen(final TestScreen screen) {
+		this.screen = screen;
+	}
+	
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
@@ -25,7 +31,9 @@ public class TestInputProcessor implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Gdx.app.log("===", "onTouchDown() - x = " + screenX + " y = " + screenY + " p = " + pointer + " btn = " + button);
+		if (screen != null) {
+			return screen.touchDown(screenX, screenY, pointer, button);
+		}
 		return false;
 	}
 

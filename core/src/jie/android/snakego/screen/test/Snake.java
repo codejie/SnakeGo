@@ -3,14 +3,15 @@ package jie.android.snakego.screen.test;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Snake {
 	public class Header extends DrawableBox {
 		
-		public Header(float x, float y, int type) {
-			super(x, y, type);
+		public Header(float x, float y) {
+			super(x, y, 1);
 		}
 
 		@Override
@@ -35,8 +36,8 @@ public class Snake {
 
 			private final int index;
 			
-			public Segment(int index, float x, float y, int type) {
-				super(x, y, type);
+			public Segment(int index, float x, float y) {
+				super(x, y, 2);
 				this.index = index;
 			}
 			
@@ -59,8 +60,8 @@ public class Snake {
 		private ArrayList<Segment> segment = new ArrayList<Segment>();
 		
 		public Body() {
-			segment.add(new Segment(1, 2, 0, 0));
-			segment.add(new Segment(2, 1, 0, 0));
+			segment.add(new Segment(1, 64, 0));
+			segment.add(new Segment(2, 32, 0));
 		}
 		
 		public void update(int dx, int dy) {
@@ -81,17 +82,18 @@ public class Snake {
 	public static final float INTERVAL_UPDATE = (1.0f / 60.0f) * 60.0f;
 	public static final int INTERVAL_STEP = 24;
 	
-	private Header header = new Header(3, 0, 0);
+	private Header header = new Header(96, 0);
 	private Body body = new Body();
 	
-	private boolean invalidation = false;
 	private int stepCounter = 0;
 	private float lastDelta = 0.0f;
+	private float dx = 32.0f;
+	private float dy = 0.0f;
 	
 	public void update(float delta) {
 		lastDelta += delta;
 		if (lastDelta > INTERVAL_UPDATE) {
-			header.update(1, 1);
+			header.update(dx, dy);
 			final Vector2 l = header.getPrevPosition();
 			body.update((int)l.x, (int)l.y);
 			
@@ -104,19 +106,25 @@ public class Snake {
 //			}
 			Gdx.app.log("===", "delta = " + lastDelta + " - setpCounter = " + stepCounter);
 			lastDelta = 0.0f;
-			invalidation = false;
 		}
 	}
 	
 	public void draw(final SpriteBatch batch) {
-		if (!invalidation) {
 			header.draw(batch);
 			body.draw(batch);
-			invalidation = true;
-		}
 	}
 	
 	private void check() {
 		
 	}
+
+	public void setX(float f) {
+		dx = f;		
+	}
+	
+	public void setY(float f) {
+		dy = f;
+		dx = 0.0f;
+	}
+	
 }

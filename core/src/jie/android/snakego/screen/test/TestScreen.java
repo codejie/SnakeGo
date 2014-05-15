@@ -2,6 +2,7 @@ package jie.android.snakego.screen.test;
 
 import jie.android.snakego.SnakeGo;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 public class TestScreen implements Screen {
@@ -19,7 +20,9 @@ public class TestScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		snake.update(delta);
-		snake.draw(null);
+		game.getSpriteBatch().begin();
+		snake.draw(game.getSpriteBatch());
+		game.getSpriteBatch().end();
 	}
 
 	@Override
@@ -56,6 +59,12 @@ public class TestScreen implements Screen {
 	public void dispose() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		Gdx.app.log("===", "onTouchDown() - x = " + screenX + " y = " + screenY + " p = " + pointer + " btn = " + button);
+		snake.setY(-32.0f);
+		return true;
 	}
 
 }
