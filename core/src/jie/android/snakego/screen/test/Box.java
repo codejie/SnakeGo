@@ -4,9 +4,17 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class Box {
 
-	public Vector2 position;
-	public int type;
+	protected Vector2 position;
+	protected Vector2 prevPosition;
 	
-	public abstract void update(float delta);
-	public abstract void draw();	
+	public Box(float x, float y) {
+		position = new Vector2(x, y);
+		prevPosition = new Vector2(position);
+	}
+
+	public final Vector2 getPrevPosition() {
+		return prevPosition;
+	}
+	
+	public abstract void update(float dx, float dy);
 }

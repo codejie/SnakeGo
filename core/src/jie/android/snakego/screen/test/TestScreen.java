@@ -19,7 +19,7 @@ public class TestScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		snake.update(delta);
-		snake.draw();
+		snake.draw(null);
 	}
 
 	@Override
