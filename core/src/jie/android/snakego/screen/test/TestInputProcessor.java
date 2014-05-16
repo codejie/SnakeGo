@@ -1,6 +1,5 @@
 package jie.android.snakego.screen.test;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
 public class TestInputProcessor implements InputProcessor {
@@ -39,13 +38,17 @@ public class TestInputProcessor implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		if (screen != null) {
+			return screen.touchUp(screenX, screenY, pointer, button);
+		}
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
+		if (screen != null) {
+			return screen.touchDragged(screenX, screenY, pointer);
+		}
 		return false;
 	}
 

@@ -8,6 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Snake {
+	
+	public interface OnUpdateListener {
+		public void onUpdate(float x, float y);
+	}
+	
 	public class Header extends DrawableBox {
 		
 		public Header(float x, float y) {
@@ -53,15 +58,15 @@ public class Snake {
 			@Override
 			public void draw(final SpriteBatch batch) {
 				super.draw(batch);
-				Gdx.app.log("Segment", "x = " + position.x + " y = " + position.y);				
+//				Gdx.app.log("Segment", "x = " + position.x + " y = " + position.y);				
 			}
 		}
 		
 		private ArrayList<Segment> segment = new ArrayList<Segment>();
 		
 		public Body() {
-			segment.add(new Segment(1, 64, 0));
-			segment.add(new Segment(2, 32, 0));
+			segment.add(new Segment(1, 0, 0));
+			segment.add(new Segment(2, 0, 0));
 		}
 		
 		public void update(int dx, int dy) {
@@ -79,31 +84,40 @@ public class Snake {
 		}		
 	}
 	
-	public static final float INTERVAL_UPDATE = (1.0f / 60.0f) * 60.0f;
+	public static final float INTERVAL_UPDATE = (1.0f / 60.0f) * 15.0f;
 	public static final int INTERVAL_STEP = 24;
 	
-	private Header header = new Header(96, 0);
+	private Header header = new Header(0, 0);
 	private Body body = new Body();
 	
 	private int stepCounter = 0;
 	private float lastDelta = 0.0f;
-	private float dx = 32.0f;
-	private float dy = 0.0f;
+	private float dx = 0.0f;
+	private float dy = 32.0f;
+	
+	private float tdx = -1.0f;
+	private float tdy = -1.0f;
+	
+	private OnUpdateListener updateListener = null;
+	
+	public Snake(final OnUpdateListener listener) {
+		updateListener = listener;
+	}
 	
 	public void update(float delta) {
 		lastDelta += delta;
 		if (lastDelta > INTERVAL_UPDATE) {
-			header.update(dx, dy);
-			final Vector2 l = header.getPrevPosition();
-			body.update((int)l.x, (int)l.y);
 			
+//			header.update(dx, dy);
+//			final Vector2 l = header.getPrevPosition();
+//			body.update((int)l.x, (int)l.y);
+			
+			if (updateListener != null) {
+				updateListener.onUpdate(header.position.x, header.position.y);
+			}
+			
+			check();
 
-			
-//			if (++ stepCounter >= INTERVAL_STEP) {
-//				stepCounter = 0;				
-//				check();
-//				//listener
-//			}
 			Gdx.app.log("===", "delta = " + lastDelta + " - setpCounter = " + stepCounter);
 			lastDelta = 0.0f;
 		}
@@ -115,16 +129,35 @@ public class Snake {
 	}
 	
 	private void check() {
-		
+		if (tdx != -1.0f) {
+			if (dx != -tdx) {
+				dx = tdx;
+			}
+		}
+		if (tdy != -1.0f) {
+			dy = tdy;
+		}
 	}
 
-	public void setX(float f) {
-		dx = f;		
+	public boolean onTouchDown(float x, float y) {
+		if (x > 0) {
+			tdx = 32.0f;
+		} else {
+			tdx = -32.0f;
+		}
+		tdy = 0.0f;
+		return true;
 	}
-	
-	public void setY(float f) {
-		dy = f;
-		dx = 0.0f;
+
+	public boolean onTouchUp(float x, float y) {
+		tdx = 0.0f;
+		tdy = 32.0f;
+		return true;
+	}
+
+	public boolean onTouchDragged(float x, float y) {
+		
+		return false;
 	}
 	
 }
