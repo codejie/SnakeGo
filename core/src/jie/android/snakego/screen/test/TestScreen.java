@@ -4,6 +4,8 @@ import jie.android.snakego.SnakeGo;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
 public class TestScreen implements Screen {
@@ -11,6 +13,7 @@ public class TestScreen implements Screen {
 	private final SnakeGo game;	
 	private final Snake snake;	
 	
+	private Texture img, img1;
 	private final Snake.OnUpdateListener listener = new Snake.OnUpdateListener() {
 		
 		@Override
@@ -23,6 +26,8 @@ public class TestScreen implements Screen {
 		this.game = snakeGo;
 		
 		this.snake = new Snake(listener);
+		this.img = new Texture("body.png");
+		this.img1 = new Texture("header.png");
 	}
 
 	@Override
@@ -32,7 +37,10 @@ public class TestScreen implements Screen {
 		
 		game.getSpriteBatch().disableBlending();
 		game.getSpriteBatch().begin();
-		snake.draw(game.getSpriteBatch());
+		snake.draw(game.getSpriteBatch(), game.getScreenScale());
+		
+		game.getSpriteBatch().draw(img, 20 * game.getScreenScale().x, 300 * game.getScreenScale().y, 48 * game.getScreenScale().x, 48 * game.getScreenScale().y);
+		game.getSpriteBatch().draw(img1, 200, 0);		
 		game.getSpriteBatch().end();
 	}
 
@@ -118,23 +126,18 @@ public class TestScreen implements Screen {
 	}
 	
 	public void onSnakeUpdate(float x, float y) {
-		final Vector3 pos = game.getCamera().position;
-//		if (pos.y < y) {		
-			pos.y += 32.0 * game.getScreenScale().y;
-			game.getCamera().position.set(pos);
-			game.getCamera().viewportWidth = (int)((768) * game.getScreenScale().x);//viewportWidth;
-			game.getCamera().viewportHeight = (int)((1280) * game.getScreenScale().y);//viewportHeight;
-			
-			game.getCamera().update();
-			
-			Gdx.gl.glViewport((int)pos.x, (int)pos.y, (int)game.getCamera().viewportWidth, (int)game.getCamera().viewportHeight);
-			
-			//game.getSpriteBatch().setProjectionMatrix(game.getCamera().combined);
-			
-			
-			
+		final OrthographicCamera camera = game.getCamera();
+		camera.translate(0.0f, 48.0f * game.getScreenScale().y, 0.0f);
+		camera.update();
+		game.getSpriteBatch().setProjectionMatrix(camera.combined);
+//		
+//	    int viewportX = (int)((game.getScreenSize().x - game.getScreenViewport().x) / 2);
+//	    int viewportY = (int)((game.getScreenSize().y - game.getScreenViewport().y) / 2);
+//	    int viewportWidth = (int)game.getScreenViewport().x;
+//	    int viewportHeight = (int)game.getScreenViewport().y;
+//	    
+//		Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);
 
-//		}
 	}
 
 }

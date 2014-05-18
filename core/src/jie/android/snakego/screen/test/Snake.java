@@ -29,8 +29,8 @@ public class Snake {
 		}
 
 		@Override
-		public void draw(final SpriteBatch batch) {
-			super.draw(batch);
+		public void draw(final SpriteBatch batch, final Vector2 scale) {
+			super.draw(batch, scale);
 			// TODO Auto-generated method stub
 			Gdx.app.log("Header", "x = " + position.x + " y = " + position.y);
 		}
@@ -56,8 +56,8 @@ public class Snake {
 			}
 
 			@Override
-			public void draw(final SpriteBatch batch) {
-				super.draw(batch);
+			public void draw(final SpriteBatch batch, final Vector2 scale) {
+				super.draw(batch, scale);
 //				Gdx.app.log("Segment", "x = " + position.x + " y = " + position.y);				
 			}
 		}
@@ -67,19 +67,27 @@ public class Snake {
 		public Body() {
 			segment.add(new Segment(1, 0, 0));
 			segment.add(new Segment(2, 0, 0));
+			segment.add(new Segment(3, 0, 0));
+			segment.add(new Segment(4, 0, 0));
+			segment.add(new Segment(5, 0, 0));
+			segment.add(new Segment(6, 0, 0));
+			segment.add(new Segment(7, 0, 0));
+			segment.add(new Segment(8, 0, 0));
+			segment.add(new Segment(9, 0, 0));
+			segment.add(new Segment(10, 0, 0));
 		}
 		
-		public void update(int dx, int dy) {
+		public void update(float dx, float dy) {
 			Vector2 last = new Vector2(dx, dy);
 			for (final Segment s : segment) {
-				s.update((int)last.x, (int)last.y);
+				s.update(last.x, last.y);
 				last = s.getPrevPosition();
 			}
 		}
 
-		public void draw(final SpriteBatch batch) {
+		public void draw(final SpriteBatch batch, final Vector2 scale) {
 			for (final Segment s : segment) {
-				s.draw(batch);
+				s.draw(batch, scale);
 			}			
 		}		
 	}
@@ -93,11 +101,14 @@ public class Snake {
 	private int stepCounter = 0;
 	private float lastDelta = 0.0f;
 	private float dx = 0.0f;
-	private float dy = 32.0f;
+	private float dy = 48.0f;
 	
 	private float tdx = -1.0f;
 	private float tdy = -1.0f;
 	
+	private Vector2 scale;
+	
+
 	private OnUpdateListener updateListener = null;
 	
 	public Snake(final OnUpdateListener listener) {
@@ -108,14 +119,15 @@ public class Snake {
 		lastDelta += delta;
 		if (lastDelta > INTERVAL_UPDATE) {
 			
-//			header.update(dx, dy);
-//			final Vector2 l = header.getPrevPosition();
-//			body.update((int)l.x, (int)l.y);
+			header.update(dx, dy);
+			final Vector2 l = header.getPrevPosition();
+			body.update(l.x, l.y);
 			
-			if (updateListener != null) {
-				updateListener.onUpdate(header.position.x, header.position.y);
-			}
-			
+			if (dy != 0) {
+				if (updateListener != null) {
+					updateListener.onUpdate(header.position.x, header.position.y);
+				}
+			}			
 			check();
 
 			Gdx.app.log("===", "delta = " + lastDelta + " - setpCounter = " + stepCounter);
@@ -123,9 +135,10 @@ public class Snake {
 		}
 	}
 	
-	public void draw(final SpriteBatch batch) {
-			header.draw(batch);
-			body.draw(batch);
+	public void draw(final SpriteBatch batch, final Vector2 scale) {
+		this.scale = scale;
+		header.draw(batch, scale);
+		body.draw(batch, scale);
 	}
 	
 	private void check() {
@@ -140,10 +153,10 @@ public class Snake {
 	}
 
 	public boolean onTouchDown(float x, float y) {
-		if (x > 0) {
-			tdx = 32.0f;
+		if (x > header.position.x) {
+			tdx = 48.0f;
 		} else {
-			tdx = -32.0f;
+			tdx = -48.0f;
 		}
 		tdy = 0.0f;
 		return true;
@@ -151,7 +164,7 @@ public class Snake {
 
 	public boolean onTouchUp(float x, float y) {
 		tdx = 0.0f;
-		tdy = 32.0f;
+		tdy = 48.0f;
 		return true;
 	}
 
