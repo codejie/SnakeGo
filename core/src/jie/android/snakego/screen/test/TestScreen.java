@@ -1,6 +1,7 @@
 package jie.android.snakego.screen.test;
 
 import jie.android.snakego.SnakeGo;
+import jie.android.snakego.screen.BaseScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -106,6 +107,8 @@ public class TestScreen implements Screen {
 		game.getCamera().unproject(pos);
 		
 		Gdx.app.log("===", "onTouchUp() pos - x = " + pos.x + " y = " + pos.y);
+		
+		game.setScreen(new BaseScreen(this.game));
 		
 		return snake.onTouchUp(pos.x, pos.y);		
 	}

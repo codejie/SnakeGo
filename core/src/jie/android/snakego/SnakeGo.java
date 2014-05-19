@@ -1,5 +1,6 @@
 package jie.android.snakego;
 
+import jie.android.snakego.screen.BaseScreen;
 import jie.android.snakego.screen.test.TestInputProcessor;
 import jie.android.snakego.screen.test.TestScreen;
 
@@ -45,8 +46,9 @@ public class SnakeGo extends Game {
 //		batch.setProjectionMatrix(camera.combined);
 		Gdx.input.setInputProcessor(inputProcessor);
 		
-		setScreen(new TestScreen(this));
+		//setScreen(new TestScreen(this));
 		//super.setScreen(new T2Screen(this));
+		super.setScreen(new BaseScreen(this));
 	}
 
 	private float y = 0.0f;
@@ -70,24 +72,24 @@ public class SnakeGo extends Game {
 	@Override
 	public void resize(int width, int height) {
 		
-		Vector2 size = Scaling.fit.apply(WIDTH, HEIGHT, width, height);
+//		Vector2 size = Scaling.fit.apply(WIDTH, HEIGHT, width, height);
+////		
+//		screenScaling = new Vector2((size.x / WIDTH), (size.y / HEIGHT));
+//		//screenScaling = new Vector2(1.0f, 1.0f);
+//		screenSize = new Vector2(width, height);
+//		screenViewport = new Vector2(size);
 //		
-		screenScaling = new Vector2((size.x / WIDTH), (size.y / HEIGHT));
-		//screenScaling = new Vector2(1.0f, 1.0f);
-		screenSize = new Vector2(width, height);
-		screenViewport = new Vector2(size);
-		
-
-		camera = new OrthographicCamera(size.x, size.y);
-		camera.update();
-	    
-	    int viewportX = (int)(width - size.x) / 2;
-	    int viewportY = (int)(height - size.y) / 2;
-	    int viewportWidth = (int)size.x;
-	    int viewportHeight = (int)size.y;
-	    
-		batch.setProjectionMatrix(camera.combined);
-		Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);		
+//
+//		camera = new OrthographicCamera(size.x, size.y);
+//		camera.update();
+//	    
+//	    int viewportX = (int)(width - size.x) / 2;
+//	    int viewportY = (int)(height - size.y) / 2;
+//	    int viewportWidth = (int)size.x;
+//	    int viewportHeight = (int)size.y;
+//	    
+//		batch.setProjectionMatrix(camera.combined);
+//		Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);		
 
 		super.resize(width, height);
 	}
