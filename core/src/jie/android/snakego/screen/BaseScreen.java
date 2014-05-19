@@ -29,9 +29,11 @@ public class BaseScreen extends Stage implements Screen {
 
 		image = new Image(new Texture("badlogic.jpg"));
 //		image = new Image(new Texture("header.png"));
-		image.setPosition(0, 0);
-//		image.setWidth(64);
-//		image.setHeight(64);
+		image.setPosition(0,0);
+//		image.setWidth(CommonConsts.Screen.WIDTH);
+//		image.setHeight(CommonConsts.Screen.HEIGHT);
+		image.setWidth(256);
+		image.setHeight(256);
 		this.addActor(image);
 	}
 	
@@ -49,30 +51,12 @@ public class BaseScreen extends Stage implements Screen {
 //		
 		Vector2 screenScaling = new Vector2((size.x / CommonConsts.Screen.WIDTH), (size.y / CommonConsts.Screen.HEIGHT));
 		
-		float s = CommonConsts.Screen.WIDTH / CommonConsts.Screen.HEIGHT;
-//		//screenScaling = new Vector2(1.0f, 1.0f);
-//		screenSize = new Vector2(width, height);
-//		screenViewport = new Vector2(size);
-//		
-//
-//		camera = new OrthographicCamera(size.x, size.y);
-//		camera.update();
-	    
-	    int viewportX = (int)(width - size.x) / 2;
-	    int viewportY = (int)(height - size.y) / 2;
-	    int viewportWidth = (int)size.x;
-	    int viewportHeight = (int)size.y;
-	    
-//		batch.setProjectionMatrix(camera.combined);
-//		Gdx.gl.glViewport(viewportX, viewportY, viewportWidth, viewportHeight);				
+		float s = Math.min(screenScaling.x, screenScaling.y);// 1.0f;	    
 		
 		this.getViewport().update((int)size.x, (int)size.y, true);
-		float w = image.getWidth() * screenScaling.x;
-		float h = image.getHeight() * screenScaling.y;
-//		image.setWidth(w);
-//		image.setHeight(h);
-		image.setScale(screenScaling.x, screenScaling.y);
-//		this.getRoot().setScale(screenScaling.x * (CommonConsts.Screen.WIDTH /CommonConsts.Screen.HEIGHT) , screenScaling.y * (CommonConsts.Screen.WIDTH /CommonConsts.Screen.HEIGHT) );
+
+		//this.getRoot().setScale(screenScaling.x, screenScaling.y);
+		//this.getRoot().setScale(s);
 	}
 
 	@Override
