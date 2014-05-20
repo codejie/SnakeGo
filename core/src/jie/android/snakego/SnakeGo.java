@@ -1,6 +1,7 @@
 package jie.android.snakego;
 
 import jie.android.snakego.screen.BaseScreen;
+import jie.android.snakego.screen.snake.SnakeScreen;
 import jie.android.snakego.screen.test.TestInputProcessor;
 import jie.android.snakego.screen.test.TestScreen;
 
@@ -48,7 +49,8 @@ public class SnakeGo extends Game {
 		
 		//setScreen(new TestScreen(this));
 		//super.setScreen(new T2Screen(this));
-		super.setScreen(new BaseScreen(this));
+		//super.setScreen(new BaseScreen(this));
+		super.setScreen(new SnakeScreen(this));
 	}
 
 	private float y = 0.0f;

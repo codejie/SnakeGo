@@ -32,7 +32,7 @@ public class Snake {
 		public void draw(final SpriteBatch batch, final Vector2 scale) {
 			super.draw(batch, scale);
 			// TODO Auto-generated method stub
-			Gdx.app.log("Header", "x = " + position.x + " y = " + position.y);
+//			Gdx.app.log("Header", "x = " + position.x + " y = " + position.y);
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class Snake {
 			}			
 			check();
 
-			Gdx.app.log("===", "delta = " + lastDelta + " - setpCounter = " + stepCounter);
+			//Gdx.app.log("===", "delta = " + lastDelta + " - setpCounter = " + stepCounter);
 			lastDelta = 0.0f;
 		}
 	}

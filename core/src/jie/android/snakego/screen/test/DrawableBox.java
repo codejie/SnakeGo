@@ -24,7 +24,8 @@ public abstract class DrawableBox extends Box implements Disposable {
 	}
 
 	@Override
-	public void dispose() {		
+	public void dispose() {
+		texture.dispose();
 	}
 	
 	public void draw(final SpriteBatch batch, final Vector2 scale) {

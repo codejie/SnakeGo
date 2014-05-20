@@ -11,8 +11,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		//new LwjglApplication(new SnakeGoGame(), config);
 		
-		config.width = 800 / 3;
-		config.height = 400 / 3;
+		config.width = 600 / 3;
+		config.height = 800 / 3;
 		
 		new LwjglApplication(new SnakeGo(), config);
 	}
