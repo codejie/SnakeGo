@@ -113,7 +113,6 @@ public class Snake {
 		}
 	}
 	
-	
 	private final Stage stage;
 	private OnUpdateListener updateListener = null;
 	
