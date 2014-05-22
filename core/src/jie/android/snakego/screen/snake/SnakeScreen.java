@@ -12,12 +12,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import jie.android.snakego.CommonConsts;
 import jie.android.snakego.SnakeGo;
 import jie.android.snakego.screen.BaseScreen;
+import jie.android.snakego.screen.snake.action.Action;
 import jie.android.snakego.utils.Logger;
 import jie.android.snakego.utils.Transformer;
 
 public class SnakeScreen extends BaseScreen {
 
+	private final BrickFrame frame;
 	private final Snake snake;
+	
 	private final Actor touchPad;
 	
 	private final Snake.OnUpdateListener listener = new Snake.OnUpdateListener() {
@@ -31,7 +34,8 @@ public class SnakeScreen extends BaseScreen {
 	
 	public SnakeScreen(final SnakeGo game) {
 		super(game);
-		
+
+		this.frame = new BrickFrame(this);	
 		this.snake = new Snake(this);
 		
 		touchPad = new Actor();
@@ -63,13 +67,6 @@ public class SnakeScreen extends BaseScreen {
 		snake.update(delta);
 	}
 
-	protected void onSnakeUpdate(float x, float y) {
-		final OrthographicCamera camera = (OrthographicCamera) this.getCamera();// game.getCamera();
-		camera.translate(0.0f, 48.0f, 0.0f);
-		camera.update();
-		this.getSpriteBatch().setProjectionMatrix(camera.combined);		
-	}
-
 	protected void onTouchPadTouchDown(float stageX, float stageY, int pointer) {
 		final Vector2 v2 = Transformer.screenToMatrix(stageX, stageY);
 		snake.touchDown((int)v2.x, (int)v2.y);
@@ -81,12 +78,24 @@ public class SnakeScreen extends BaseScreen {
 	}
 
 	protected void onSnakeXYUpdate(int x, int y, int dx, int dy) {
+		updateCamera(dx, dy);
+		checkFrame(x, y);
+	}
+
+	private void checkFrame(int x, int y) {
+		final Brick brick = frame.getBrick(x, y);
+		if (brick != null) {
+			Action.doAction(brick, frame, snake, this);
+		}
+	}
+
+	private void updateCamera(int dx, int dy) {
 		final Vector2 v2 = Transformer.matrixToScreen(dx, dy);
 		
 		final Camera camera = this.getCamera();
 		camera.translate(0.0f, v2.y, 0.0f);
 		camera.update();
-//		this.getSpriteBatch().setProjectionMatrix(camera.combined);
+//		this.getSpriteBatch().setProjectionMatrix(camera.combined);		
 	}
 	
 }

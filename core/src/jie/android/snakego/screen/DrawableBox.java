@@ -24,6 +24,12 @@ public class DrawableBox extends Box implements Disposable {
 			stage.addActor(image);
 		}
 	}
+	
+	public void remove(final Stage stage) {
+		if (image != null) {
+			image.remove();
+		}
+	}
 
 	@Override
 	public void setXY(int x, int y) {
