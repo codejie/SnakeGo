@@ -39,14 +39,15 @@ public class BrickFrame {
 	public BrickFrame(final Stage stage) {
 		this.stage = stage;
 		
-		init()
-		;
+		init();
 		put();
 	}
 	
 	public boolean init() {
-		Brick brick = new Brick(8, 20, 0, 0);
+		Brick brick = new Brick(8, 20, 0, 0);		
+		brickMap.put(new XY(brick.getX(), brick.getY()), brick);
 		
+		brick = new Brick(6, 20, 0, 1);
 		brickMap.put(new XY(brick.getX(), brick.getY()), brick);
 		
 		return true;

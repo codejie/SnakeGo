@@ -16,5 +16,11 @@ public interface CommonConsts {
 		public static final int HEIGHT = 26;
 	}
 	
+	public interface ActionCode {
+		public static final int DEAD = 1;
+		public static final int INCREASE_1 = 20;
+		public static final int INCREASE_2 = 21;
+	}
+	
 	
 }

@@ -78,8 +78,14 @@ public class SnakeScreen extends BaseScreen {
 	}
 
 	protected void onSnakeXYUpdate(int x, int y, int dx, int dy) {
+		updateTouchPad(dx, dy);
 		updateCamera(dx, dy);
 		checkFrame(x, y);
+	}
+
+	private void updateTouchPad(int dx, int dy) {
+		final Vector2 v2 = Transformer.matrixToScreen(dx, dy);
+		touchPad.moveBy(0.0f, v2.y);
 	}
 
 	private void checkFrame(int x, int y) {
@@ -96,6 +102,10 @@ public class SnakeScreen extends BaseScreen {
 		camera.translate(0.0f, v2.y, 0.0f);
 		camera.update();
 //		this.getSpriteBatch().setProjectionMatrix(camera.combined);		
+	}
+
+	public void showResult(boolean succ) {
+		
 	}
 	
 }

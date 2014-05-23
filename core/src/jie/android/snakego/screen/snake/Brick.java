@@ -7,11 +7,13 @@ import jie.android.snakego.screen.DrawableBox;
 
 public class Brick extends DrawableBox {
 
-	private int code = 0;
+	private final int code;
+	private final int type;
 	
 	public Brick(int x, int y, int type, int code) {
 		super(x, y, Brick.makeImage(type));
 		this.code = code;
+		this.type = type;
 	}
 	
 	public static final Image makeImage(int type) {
@@ -24,6 +26,10 @@ public class Brick extends DrawableBox {
 	
 	public int getCode() {
 		return code;
+	}
+
+	public int getType() {
+		return type;
 	}
 
 	

@@ -43,7 +43,7 @@ public class Snake {
 		}
 	}
 	
-	protected class Header extends Segment {
+	public class Header extends Segment {
 
 		public Header(int x, int y) {
 			super(x, y, 0);
@@ -60,7 +60,7 @@ public class Snake {
 		}		
 	}
 	
-	protected class Body {
+	public class Body {
 		private ArrayList<Segment> segments = new ArrayList<Segment>();
 		
 		public Body() {
@@ -74,6 +74,13 @@ public class Snake {
 		
 		public void addSegment(int x, int y, int type) {
 			segments.add(new Segment(x, y, type));
+		}
+		
+		public void addSegment(final Stage stage, int type) {
+			final Segment segment = segments.get(segments.size() - 1);
+			final Segment n = new Segment(segment.getPrevX(), segment.getPrevY(), type); 
+			n.put(stage);
+			segments.add(n);
 		}
 		
 		public void removeSegment() {
@@ -144,6 +151,14 @@ public class Snake {
 		body.put(stage);
 	}
 	
+	public final Header getHeader() {
+		return header;
+	}
+	
+	public final Body getBody() {
+		return body;
+	}
+	
 	public void update(float delta) {
 		lastDelta += delta;
 		if (lastDelta > updateInterval) {
@@ -188,5 +203,10 @@ public class Snake {
 	
 	public void setUpdateListener(final OnUpdateListener listener) {
 		updateListener = listener;
+	}
+
+	public void stop() {
+		tdx = 0;
+		tdy = 0;
 	}
 }
