@@ -53,7 +53,7 @@ public class BrickFrame {
 		return true;
 	}
 	
-	public boolean load() {
+	public boolean load(final String xml) {
 		return false;
 	}
 	
@@ -63,6 +63,10 @@ public class BrickFrame {
 		}
 	}
 
+	public final void addBrick(int x, int y, int type, int code) {
+		Brick brick = new Brick(x, y, type, code);
+		brickMap.put(new XY(x, y), brick);
+	}
 
 	public final Brick getBrick(int x, int y) {
 		return brickMap.get(new XY(x, y));
@@ -80,6 +84,12 @@ public class BrickFrame {
 		brickMap.remove(new XY(brick.getX(), brick.getY()));		
 	}
 	
+	public void removeAllBricks() {
+		for (final Entry<XY, Brick> entry : brickMap.entrySet()) {
+			entry.getValue().remove(stage);
+		}
+		brickMap.clear();
+	}
 	
 	public int checkCode(int x, int y) {
 		final Brick brick = brickMap.get(new XY(x, y));

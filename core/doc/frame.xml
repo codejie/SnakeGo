@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Snake-Frame>
-    <Frame>
-        <Brick x="5" y = "10" code="1" />
-        <Brick x="6" y = "10" code="1" />
+    <Frame hasDefault="true">
+        <Brick x="5" y="10" type="0" code="1" />
+        <Brick x="6" y="10" type="0" code="1" />
     </Frame>
 </Snake-Frame>
